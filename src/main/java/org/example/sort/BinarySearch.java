@@ -1,4 +1,4 @@
-package org.example;
+package org.example.sort;
 
 import java.rmi.server.RMIClassLoader;
 import java.util.ArrayList;
