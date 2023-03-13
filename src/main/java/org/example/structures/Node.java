@@ -34,14 +34,14 @@ class Node<T> {
         this.prev = prev;
     }
 
-    public boolean hasNext(Node<T> node) {
-        return node.next != null;
+    public boolean hasNext() {
+        return this.next != null;
 
     }
 
-    public Node<T> nextNode(Node<T> node) {
-        if (node.hasNext(node)) {
-            return node.getNext();
+    public Node<T> nextNode() {
+        if (this.hasNext()) {
+            return this.getNext();
 
         }
         return null;

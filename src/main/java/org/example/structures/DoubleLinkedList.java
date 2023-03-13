@@ -1,51 +1,62 @@
 package org.example.structures;
 
+import javax.sound.midi.Soundbank;
+
 public class DoubleLinkedList<T> {
 
     Node<T> head;
     Node<T> tail;
-    Integer amount = 0;
+    Integer amount;
+
+    public DoubleLinkedList() {
+        this.head = null;
+        this.tail = null;
+        this.amount = 0;
+    }
 
 
     public void addFirst(T value) {
         if (listIsEmpty()) {
-            Node<T> node = createNode(value, this.head, this.tail);
-
-            this.head = node;
-            this.tail = node;
-            this.amount++;
+            setFirstInChain(value);
 
         } else {
-            this.head = createNode(value, this.head.getNext(), this.head);
+            Node <T> newNode = new Node<>();
+            newNode.setValue(value);
+            newNode.setNext(head.getNext());
+            newNode.setPrev(head);
+            head.setNext(newNode);
+            head.setValue(newNode.getValue());
             this.amount++;
-            setTail();
-
         }
 
     }
 
-    public void addLast(T value){
+    private void setFirstInChain(T value){
+        Node<T> node = new Node<>();
+        this.head = createNode(value, node, null);
+        this.tail = createNode(value, null, node);
+        node.setPrev(this.head);
+        node.setNext(this.tail);
+        node.setValue(value);
+        this.amount++;
+    }
+
+    public void addLast(T value) {
         if (listIsEmpty()) {
-            Node<T> node = createNode(value, this.head, this.tail);
-            this.head = node;
-            this.tail = node;
-            this.amount++;
-
+            setFirstInChain(value);
         } else {
-            this.tail = createNode(value, this.head.getNext(), this.head);
+
+            Node <T> newNode = new Node<>();
+            newNode.setValue(value);
+            newNode.setNext(tail);
+            newNode.setPrev(tail.getPrev());
+            tail.setPrev(newNode);
+            tail.setValue(newNode.getValue());
             this.amount++;
-            setHead();
-
 
         }
     }
 
-    private void setHead() {
-        Node<T> node = this.tail;
-        while (node.hasPrev(node)) {
-            this.head = node.getPrev();
-        }
-    }
 
 
     private Node<T> createNode(T value, Node<T> next, Node<T> prev) {
@@ -60,13 +71,6 @@ public class DoubleLinkedList<T> {
         return head == null && tail == null;
     }
 
-    private void setTail() {
-        Node<T> node = this.head;
-        while (node.hasNext(node)) {
-            this.tail = node;
-        }
-    }
-
 
     public Node<T> getFirst() {
         return head;
@@ -79,4 +83,39 @@ public class DoubleLinkedList<T> {
     public Integer getAmount() {
         return amount;
     }
+
+    public void reverse() {
+        if (listIsEmpty()) {
+            return;
+        }
+
+        Node<T> current = head;
+        Node<T> temp = null;
+        while (current != null) {
+            temp = current.getPrev();
+            current.setPrev(current.getNext());
+            current.setNext(temp);
+            current = current.getPrev();
+        }
+        temp = head;
+        head = tail;
+        tail = temp;
+    }
+
+    public void putInOrder() {
+        if (head == null) return;
+
+        if (head.hasNext()){
+            Node<T> node = head.getNext();
+            while (node.hasNext()){
+                System.out.println(node);
+                node = node.getNext();
+            }
+           System.out.println(tail);
+
+        }
+
+    }
+
+
 }

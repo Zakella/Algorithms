@@ -41,7 +41,7 @@ public class App
 
         DoubleLinkedList<String> list = new DoubleLinkedList<>();
         list.addFirst("test4");
-//
+////
 //        System.out.println(list.getFirst());
 //        System.out.println(list.getLast());
         list.addFirst("test3");
@@ -51,9 +51,16 @@ public class App
 //        System.out.println(list.getFirst());
 //        System.out.println(list.getLast());
 //        System.out.println(list.getAmount());
-        list.addLast("test999");
+        list.addLast("last");
+        list.addFirst("first");
 
         System.out.println(list.getFirst());
         System.out.println(list.getLast());
+        System.out.println(list.getAmount());
+        list.putInOrder();
+        list.reverse();
+        list.putInOrder();
+
+
     }
 }
