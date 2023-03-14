@@ -22,10 +22,17 @@ public class DoubleLinkedList<T> {
         } else {
             Node <T> newNode = new Node<>();
             newNode.setValue(value);
-            newNode.setNext(head.getNext());
+            Node <T> nextNode;
+            if (head.hasNext()){
+                nextNode  = head.getNext();
+            }else nextNode = tail;
+
+            nextNode.setPrev(newNode);
+            newNode.setNext(nextNode);
             newNode.setPrev(head);
             head.setNext(newNode);
-            head.setValue(newNode.getValue());
+//            newNode.setPrev(newNode);
+
             this.amount++;
         }
 
@@ -33,8 +40,8 @@ public class DoubleLinkedList<T> {
 
     private void setFirstInChain(T value){
         Node<T> node = new Node<>();
-        this.head = createNode(value, node, null);
-        this.tail = createNode(value, null, node);
+        this.head = createNode(null, node, null);
+        this.tail = createNode(null, null, node);
         node.setPrev(this.head);
         node.setNext(this.tail);
         node.setValue(value);
@@ -50,8 +57,13 @@ public class DoubleLinkedList<T> {
             newNode.setValue(value);
             newNode.setNext(tail);
             newNode.setPrev(tail.getPrev());
+            Node <T> prevNode;
+            if (tail.hasPrev()){
+                prevNode = tail.getPrev();
+            }else prevNode = this.head;
+
+            prevNode.setNext(newNode);
             tail.setPrev(newNode);
-            tail.setValue(newNode.getValue());
             this.amount++;
 
         }
@@ -85,21 +97,23 @@ public class DoubleLinkedList<T> {
     }
 
     public void reverse() {
+
         if (listIsEmpty()) {
             return;
         }
 
-        Node<T> current = head;
-        Node<T> temp = null;
-        while (current != null) {
-            temp = current.getPrev();
-            current.setPrev(current.getNext());
-            current.setNext(temp);
-            current = current.getPrev();
+        Node<T> currentNode = head;
+        while (currentNode != null) {
+            Node<T> temp = currentNode.getNext();
+            currentNode.setNext(currentNode.getPrev());
+            currentNode.setPrev(temp);
+            currentNode = temp;
         }
-        temp = head;
+
+        Node<T> temp = head;
         head = tail;
         tail = temp;
+
     }
 
     public void putInOrder() {
@@ -111,7 +125,6 @@ public class DoubleLinkedList<T> {
                 System.out.println(node);
                 node = node.getNext();
             }
-           System.out.println(tail);
 
         }
 

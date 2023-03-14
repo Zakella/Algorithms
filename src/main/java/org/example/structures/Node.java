@@ -48,8 +48,8 @@ class Node<T> {
 
     }
 
-    public boolean hasPrev(Node<T> node) {
-        return node.getPrev() != null;
+    public boolean hasPrev() {
+        return this.getPrev() != null;
 
     }
 
